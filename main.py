@@ -68,7 +68,7 @@ async def upload_file(file: UploadFile = File(...)):
 
 		return JSONResponse(content={"detail": "File received successfully", "url":response['secure_url']}, status_code=200)
 	except Exception as error:
-		print(HTTPException(status_code=500, detail=f"error en el servidor {error}"))
+		return HTTPException(status_code=500, detail=f"error en el servidor {error}")
 	finally:
 		db.close()
 
@@ -76,9 +76,6 @@ async def upload_file(file: UploadFile = File(...)):
 @app.get('/images')
 async def getImage():
 	try:
-
-		# response = api.resources(type ='upload', prefix='uploads/')
-		# return JSONResponse(content={"detail":"images retrieved", "images": response['resources']}, status_code=200)
 		db.connect()
 		fetchData = product.select()
 		dataURL = []
@@ -92,7 +89,7 @@ async def getImage():
 		return dataURL
 
 	except Exception as error:
-			return JSONResponse({"error": error})
+			return HTTPException({"error": error})
 	finally:
 		db.close()
 	
