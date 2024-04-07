@@ -97,4 +97,6 @@ async def getImage():
 		db.close()
 	
 
-
+@app.post('/saludar')
+async def helloUser():
+		return JSONResponse({"hola":"usuario"})
